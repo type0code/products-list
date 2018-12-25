@@ -72,7 +72,6 @@ export class AppComponent implements OnInit {
   getData(url: string) {
     this.httpSv.getData(url).subscribe(
       data => {
-        console.log(data)
         this.tableData = this.listProducts = data;
       },
       err => {
