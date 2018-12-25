@@ -1,0 +1,58 @@
+@import '../../../../assets/scss/variables';
+
+$_module-rem: $module-rem;
+$_border-color: main-palette(100);
+$_animation: $animation;
+
+:host {
+  display: block;
+  
+  .list-wrap {
+    .filter {
+      margin-bottom: $_module-rem;
+    }
+    .list-box {
+      border: 1px solid $_border-color;
+      height: $_module-rem * 25;
+      margin-bottom: $_module-rem * 2;
+      overflow: auto;
+
+      .list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        .item {
+          .item-link {
+            color: $body-color;
+            display: block;
+            overflow: hidden;
+            padding: 0 $_module-rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            .sku {
+              opacity: .5;
+            }
+            &.selected {
+              color: main-palette(A400);
+            }
+            .delete {
+              color: #f00;
+            }
+          }
+          a.item-link {
+            &:hover {
+              color: main-palette(A400);
+            }
+            &.selected {
+              &:hover {
+                color: #f00;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div *ngIf="overlay" class="overlay" (click)="overlayClick()"></div>
+
+<div #modal class="modal">
+	<div class="modal-content">
+
+		<h3 *ngIf="title" class="title">{{ title }}</h3>
+
+		<a *ngIf="closeButton" class="close-btn" (click)="hide()">
+			<i class="icofont-close-line"></i>
+		</a>
+
+		<div class="content-box">
+			<ng-content></ng-content>
+		</div>
+
+	</div>
+</div>
+

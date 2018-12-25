@@ -1,0 +1,98 @@
+<div class="app-container">
+  <button app-button [beforeIcon]="'sli-note'" [view]="'info'" (click)="modal.show()" [type]="'button'">
+    Create a product
+  </button>
+
+  <div class="table-container">
+    <app-table [rows]="tableData" [hovered]="true">
+      <table-column [columnTitle]="'ID'" [columnName]="'id'"></table-column>
+      <table-column [columnTitle]="'SKU'" [columnName]="'sku'"></table-column>
+      <table-column [columnTitle]="'Name'" [columnName]="'name'"></table-column>
+      <table-column [columnTitle]="'Type'" [columnName]="'type'"></table-column>
+      <table-column [columnTitle]="'Customer type'" [columnName]="'customerType'"></table-column>
+      <table-column [columnTitle]="'Valid value'" [columnName]="'validValue'"></table-column>
+      <table-column [columnTitle]="'Price'" [columnName]="'price'"></table-column>
+      <table-column [columnTitle]="'Allow recharge'" [columnName]="'allowRecharge'"></table-column>
+      <table-column [columnTitle]="'Recharge price'" [columnName]="'rechargePrice'"></table-column>
+      <table-column [columnTitle]="'Vendor name'" [columnName]="'vendor'">
+        <ng-template #tableBodyTemplate let-value><span *ngIf="value">{{ value.name }}</span></ng-template>
+      </table-column>
+    </app-table>
+  </div>
+</div>
+
+<app-modal-window #modal>
+  <form
+    [formGroup]="productForm"
+    *ngIf="tableData && tableData.length"
+    novalidate
+  >
+    <h3 class="mt-0">Create new product</h3>
+
+    <app-form-group>
+      <app-input [placeholder]="'SKU'" formControlName="sku"></app-input>
+    </app-form-group>
+
+    <app-form-group>
+      <app-input [placeholder]="'Name'" formControlName="name"></app-input>
+    </app-form-group>
+
+    <app-form-group>
+      <app-select [placeholder]="'Type'" [options]="types" formControlName="type"></app-select>
+    </app-form-group>
+
+    <app-form-group>
+      <app-select [placeholder]="'Customer type'" [options]="customerTypes" formControlName="customerType"></app-select>
+    </app-form-group>
+
+    <app-form-group>
+      <app-input [placeholder]="'Valid value'" formControlName="validValue" [type]="'number'"></app-input>
+    </app-form-group>
+
+    <app-form-group>
+      <app-input [placeholder]="'Price'" formControlName="price" [type]="'number'"></app-input>
+    </app-form-group>
+
+    <app-form-group>
+      <app-checkbox formControlName="allowRecharge">Allow recharge</app-checkbox>
+    </app-form-group>
+
+    <app-form-group>
+      <app-input [placeholder]="'Recharge price'" formControlName="rechargePrice" [type]="'number'"></app-input>
+    </app-form-group>
+
+    <app-form-group class="mb-0">
+      <label>Include type</label>
+
+      <app-list
+        [list]="listProducts"
+        [includes]="includes"
+        [type]="'INCLUDE'"
+        (getSelected)="getIncluded($event)"
+      ></app-list>
+    </app-form-group>
+
+    <app-form-group class="mb-0">
+      <label>Pass type</label>
+
+      <app-list
+        [list]="listProducts"
+        [includes]="includes"
+        [type]="'PASS'"
+        (getSelected)="getIncluded($event)"
+      ></app-list>
+    </app-form-group>
+
+    <a
+      app-button
+      [href]="downloadJsonHref"
+      download="new-product.json"
+      (click)="modal.hide(); createProduct(productForm)"
+      [beforeIcon]="'sli-note'"
+      [view]="'success'"
+      [disabled]="productForm.invalid"
+    >
+      Create
+    </a>
+  </form>
+</app-modal-window>

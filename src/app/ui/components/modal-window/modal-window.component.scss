@@ -1,0 +1,162 @@
+@import '../../../../assets/scss/variables';
+
+$_animation: $animation;
+
+:host {
+	display: flex;
+	visibility: hidden;
+	position: fixed;
+	left: 0;
+	height: 100%;
+	max-height: 100%;
+	max-width: 100%;
+	top: 0;
+	width: 100%;
+	transition: 0s visibility .3s $_animation;
+	z-index: 9999;
+
+	.modal {
+		background: #fff;
+		box-shadow: 0 27px 57px rgba(0, 0, 0, 0.2);
+		opacity: 0;
+		overflow: auto;
+		max-height: 100%;
+		max-width: 100%;
+		position: relative;
+		transition: opacity .2s $_animation;
+
+		.modal-content {
+			position: relative;
+			display: block;
+			height: 100%;
+			width: 100%;
+
+			.title {
+				font-size: 1.3rem;
+				padding: (2 * $module-rem) 0 0 (4 * $module-rem);
+				margin: 0;
+			}
+			.close-btn {
+				cursor: pointer;
+				font-size: 1.5em;
+				opacity: .6;
+				position: absolute;
+				margin-top: -5px;
+				right: 2 * $module-rem;
+				top: 2 * $module-rem ;
+				transition: .2s opacity $_animation;
+
+				&:hover {
+					opacity: 1;
+				}
+			}
+			.content-box {
+				padding: $module-rem * 2;
+			}
+		}
+	}
+	.overlay {
+		background: rgba(#22394c, 0.6);
+		height: 100%;
+		left: 0;
+		opacity: 0;
+		position: fixed;
+		top: 0;
+		transition: .2s opacity $_animation;
+		width: 100%;
+	}
+
+	&.horizontal-left {
+		justify-content: flex-start;
+	}
+	&.horizontal-center {
+		justify-content: center;
+	}
+	&.horizontal-right {
+		justify-content: flex-end;
+	}
+	&.vertical-top {
+		align-items: flex-start;
+	}
+	&.vertical-center {
+		align-items: center;
+	}
+	&.vertical-bottom {
+		align-items: flex-end;
+	}
+
+	&.fadeInUp-animation,
+	&.fadeInDown-animation,
+	&.fadeInLeft-animation,
+	&.fadeInRight-animation,
+	&.zoom-animation {
+		.modal {
+			transition:
+				.2s opacity 0s $_animation,
+				.2s transform 0s $_animation;
+		}
+	}
+
+	&.fadeInUp-animation {
+		.modal {
+			transform: translateY(50px);
+		}
+	}
+
+	&.fadeInDown-animation {
+		.modal {
+			transform: translateY(-50px);
+		}
+	}
+
+	&.fadeInLeft-animation {
+		.modal {
+			transform: translateX(100%);
+		}
+	}
+
+	&.fadeInRight-animation {
+		.modal {
+			transform: translateX(-100%);
+		}
+	}
+
+	&.zoom-animation {
+		.modal {
+			transform: scale(0.5);
+		}
+	}
+
+	&.opened {
+		visibility: visible;
+		transition: 0s visibility 0s $_animation;
+
+		.modal {
+			opacity: 1;
+		}
+
+		.overlay {
+			opacity: 1;
+			transition: .2s opacity .1s $_animation;
+		}
+		&.fadeInUp-animation,
+		&.fadeInDown-animation,
+		&.fadeInLeft-animation,
+		&.fadeInRight-animation {
+			.modal {
+				transform: translate(0);
+				transition:
+					.2s opacity .1s $_animation,
+					.2s transform .1s $_animation;
+			}
+		}
+		&.zoom-animation {
+			.modal {
+				transform: scale(1);
+				transition:
+					.2s opacity .1s $_animation,
+					.2s transform .1s $_animation;
+			}
+		}
+	}
+}

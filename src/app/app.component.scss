@@ -1,0 +1,19 @@
+@import '../assets/scss/variables';
+
+:host {
+  display: block;
+  height: 100%;
+  padding: $module-rem * 2;
+
+  .app-container {
+    width: 100%;
+
+    .table-container {
+      display: block;
+      margin-top: $module-rem * 2;
+      max-height: 100%;
+      position: relative;
+      width: 100%;
+    }
+  }
+}

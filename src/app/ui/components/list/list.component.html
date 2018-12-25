@@ -1,0 +1,49 @@
+<div class="list-wrap" *ngIf="list">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <form class="filter" [formGroup]="filterForm" novalidate>
+        <app-input [placeholder]="'Filter'" formControlName="val"></app-input>
+      </form>
+
+      <div class="list-box">
+        <ul class="list">
+          <li class="item" *ngFor="let item of list">
+            <a
+              href="#"
+              class="item-link"
+              (click)="toggleSelected($event, item, false)"
+            >
+              {{ item.name }} <span class="sku">({{ item.sku }})</span>
+            </a>
+          </li>
+
+          <li class="item empty" *ngIf="!list || !list.length">
+            <span class="item-link">Empty products list</span>
+          </li>
+        </ul><!-- .list -->
+      </div><!-- .list-wrap -->
+    </div>
+
+    <div class="col-12 col-md-6">
+      <form class="filter" [formGroup]="selectedFilterForm" novalidate>
+        <app-input [placeholder]="'Filter'" formControlName="val"></app-input>
+      </form>
+
+      <div class="list-box">
+        <ul class="list">
+          <ng-container *ngFor="let item of includes">
+            <li class="item" *ngIf="item.type === type">
+              <span class="item-link">
+                <a href="#" (click)="toggleSelected($event, item.connectedProduct, true)" class="delete">
+                  <span class="sli-close"></span>
+                </a>
+
+                {{ item.connectedProduct.name }} <span class="sku">({{ item.connectedProduct.sku }})</span>
+              </span>
+            </li>
+          </ng-container>
+        </ul><!-- .list -->
+      </div><!-- .list-wrap -->
+    </div>
+  </div>
+</div><!-- .list-wrap -->

@@ -1,0 +1,58 @@
+<div class="table-wrap">
+	<table class="table-box">
+    <thead>
+      <tr>
+        <th
+          *ngFor="let c of columnList"
+          [column]="c.config"
+          [align]="headerAlign"
+          [tableSort]="c.config.sort"
+          (sortChanged)="onChangeTable(config, c)"
+        >
+          <div class="col-wrapper" [ngClass]="{ 'sorting-col': c.config.enableSorting }">
+            <ng-container *ngIf="!c.headerTemplate">
+              <span *ngIf="c.config.enableSorting" class="sorting">
+                <button class="no-style icofont-simple-up up" [ngClass]="{ 'active': c.config.sort === 'asc' }"></button>
+                <button class="no-style icofont-simple-down down" [ngClass]="{ 'active': c.config.sort === 'desc' }"></button>
+              </span>
+
+              <ng-container *ngIf="!c.enableFiltering">
+                <span class="title">{{ c.config.title }}</span>
+              </ng-container>
+
+              <ng-container *ngIf="c.enableFiltering">
+                <div class="search-box">
+                  <app-input
+                    (click)="$event.stopPropagation();"
+                    [filterTable]="c.config.filtering"
+                    [suffixIcon]="'icofont-search-alt-2'"
+                    (tableChanged)="onChangeTable(config, c)"
+                    [placeholder]="c.config.title">
+                  </app-input>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+
+          <ng-template *ngIf="c.headerTemplate" [ngTemplateOutlet]="c.headerTemplate"></ng-template>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of rows" [align]="rowAlign">
+        <td *ngFor="let col of columnList" [ngStyle]="{ 'background': contentBgColor, 'color': contentColor }">
+          <ng-container *ngIf="!col.bodyTemplate">{{ row[col.config.name] }}</ng-container>
+
+          <ng-template
+            *ngIf="col.bodyTemplate"
+            [ngTemplateOutlet]="col.bodyTemplate"
+            [ngTemplateOutletContext]="{ $implicit: row[col.config.name], row: row }"
+          ></ng-template>
+        </td>
+      </tr>
+    </tbody>
+	</table>
+
+  <div class="no-data" *ngIf="!rows">No table's data</div>
+</div>
